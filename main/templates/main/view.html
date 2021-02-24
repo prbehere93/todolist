@@ -3,7 +3,7 @@
 {%block title%} Lists {%endblock%}
 
 {%block content%}
-    {%for td in user.todolist_set%}
-        <p><a href="/{{td.name}}">td.name</a></p>
+    {%for td in user.todolist.all %}
+        <p><a href="/{{td.name}}">{{td.name}}</a></p>
     {%endfor%}
-{%endblock}
+{%endblock%}

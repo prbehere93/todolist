@@ -15,6 +15,7 @@ def index(response,name):
                     item.complete=True
                 else:
                     item.complete=False
+                item.save()
         
         elif response.POST.get("newItem"):
             txt=response.POST.get("new")
@@ -37,10 +38,10 @@ def create(response):
 
 
         if form.is_valid():
-            n=form.cleaned_data['name'] 
-            response.user.todolist_set.create(name=n)
+            n=form.cleaned_data['name']  #retrieve the name of the todolist
             t=ToDoList(name=n) #creates a new todolist with the given name
             t.save()
+            response.user.todolist.add(t)
             return HttpResponseRedirect("/%s" %t.name)
 
     else:    
@@ -49,5 +50,5 @@ def create(response):
     return render(response, "main/create.html",{"form":form})
 
 def view(response):
-    return(response, "main/view.html",{})    
+    return render(response, "main/view.html",{})    
 
