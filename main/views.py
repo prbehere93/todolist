@@ -33,10 +33,12 @@ def home(response):
 def create(response):
     #response.user
     if response.method=="POST":
-        form=CreateNewList(response.POST) #this is a dict
+        form=CreateNewList(response.POST) #this is a dictionary
+
 
         if form.is_valid():
             n=form.cleaned_data['name'] 
+            response.user.todolist_set.create(name=n)
             t=ToDoList(name=n) #creates a new todolist with the given name
             t.save()
             return HttpResponseRedirect("/%s" %t.name)
@@ -45,4 +47,7 @@ def create(response):
         form=CreateNewList()
     
     return render(response, "main/create.html",{"form":form})
+
+def view(response):
+    return(response, "main/view.html",{})    
 
